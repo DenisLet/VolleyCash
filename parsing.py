@@ -127,8 +127,22 @@ def check_link(url,time,score_one,score_two,checker,sl):
             scored.append(i[1])
         return scored
 
+
+
     def set_two(scores):
         return [sum([int(j) for j in i[2:4]]) for i in scores]
+
+    def set_two_ind_home(scores):
+        scored = list()
+        for i in scores:
+            scored.append(i[2])
+        return scored
+
+    def set_two_ind_away(scores):
+        scored = list()
+        for i in scores:
+            scored.append(i[3])
+        return scored
 
 
     t1_set1 = set_one(get_scores(team1_home + team1_away))
@@ -140,6 +154,17 @@ def check_link(url,time,score_one,score_two,checker,sl):
     t1_set1_scored_away = set_one_ind_home(get_scores(team1_away))
     t2_set1_scored_home = set_one_ind_away(get_scores(team2_home))
     t2_set1_scored_away = set_one_ind_away(get_scores(team2_away))
+
+
+    t1_set2 = set_two(get_scores(team1_home + team1_away))
+    t2_set2 = set_two(get_scores(team2_home + team2_away))
+    t1_set2_home = set_two(get_scores(team1_home))
+    t2_set2_away = set_two(get_scores(team2_away))
+
+    t1_set2_scored_home = set_two_ind_home(get_scores(team1_home))
+    t1_set2_scored_away = set_two_ind_home(get_scores(team1_away))
+    t2_set2_scored_home = set_two_ind_away(get_scores(team2_home))
+    t2_set2_scored_away = set_two_ind_away(get_scores(team2_away))
 
     def bet_string(list):
         part1 = sorted(list)[:5]
@@ -186,8 +211,13 @@ def check_link(url,time,score_one,score_two,checker,sl):
         try_it_over(sorted(t1_set1), sorted(t2_set1),
                 t1_set1_scored_home, t1_set1_scored_away, t2_set1_scored_home, t2_set1_scored_away)
 
+    bet4, bet5, bet6 = \
+        try_it_over(sorted(t1_set2), sorted(t2_set2),
+                    t1_set2_scored_home, t1_set2_scored_away, t2_set2_scored_home, t2_set2_scored_away)
+
 
     current_score = f'{score_one}:{score_two}'
+
 
 
     def bet_string(list):
@@ -203,6 +233,18 @@ def check_link(url,time,score_one,score_two,checker,sl):
             bet1,
             bet2,
             bet3
+                )
+        bet_siska(bet)
+
+
+    if checker == 2 :
+        bet = (title,"TIME :"+str(time),"SCORE: "+current_score, ' '.join(map(str,team1_name)),' '.join(map(str,team2_name)),
+            "2 SET >>>",
+            "1:" + bet_string(t1_set2),
+            "2:" + bet_string(t2_set2),
+            bet4,
+            bet5,
+            bet6
                 )
         bet_siska(bet)
 

@@ -20,7 +20,7 @@ scanset2 = set()
 
 
 def try_it(score1, score2):
-    if abs(score1 - score2) >= 7 and score1 <23 and score2 < 23:
+    if abs(score1 - score2) >= 6 and score1 <18 and score2 < 18:
         return True
 
 while True:
@@ -44,6 +44,14 @@ while True:
                         continue
                     scanset1.add(link)
                     check_link(link, set, t1_set1, t2_set1, checker, score_line)
+
+                if set == 2 and try_it(t1_set2, t2_set2) == True:
+                    link = get_link(i)
+                    checker = 2
+                    if link in scanset2:
+                        continue
+                    scanset2.add(link)
+                    check_link(link, set, t1_set2, t2_set2, checker, score_line)
 
 
             except Exception as fail:
